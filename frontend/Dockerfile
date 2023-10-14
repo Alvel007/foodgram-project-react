@@ -8,6 +8,6 @@ RUN npm ci
 
 COPY . .
 RUN npm run build
-RUN npm install --global http-server
+RUN npm install --force --global http-server
 
 CMD ["npx", "-y", "http-server", "-p", "9080", "/app/build"]
