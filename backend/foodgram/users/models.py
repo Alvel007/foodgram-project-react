@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from users.validators import validate_username, validate_password
 
+
 class User(AbstractUser):
     """
     Кастомная модель пользователя.
@@ -49,6 +50,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+
 class Subscription(models.Model):
     """
     Информация о подписках.
@@ -66,15 +68,16 @@ class Subscription(models.Model):
         verbose_name='Автор',
     )
 
-    class Meta: 
-        verbose_name = 'Подписка' 
-        verbose_name_plural = 'Подписки' 
-        constraints = [ 
-            models.UniqueConstraint( 
-                fields=['author', 'user'], 
-                name='unique_author_user', 
-            ) 
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['author', 'user'],
+                name='unique_author_user',
+            )
         ]
 
     def __str__(self):
-        return f'{self.user.username} подписан на автора: {self.author.username}'
+        return f'{self.user.username} подписан на автора: '
+        f'{self.author.username}'
