@@ -10,10 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', default=get_random_secret_key())
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost',
-                 '127.0.0.1']
+                 '127.0.0.1',
+                 '158.160.72.40']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,10 +106,10 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'collected_static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
