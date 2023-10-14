@@ -8,6 +8,6 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt --no-cache-dir
 
-COPY . .
+COPY foodgram/ .
 
 CMD ["gunicorn", "--bind", "0:9080", "foodgram.wsgi:application", "--reload"]
