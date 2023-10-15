@@ -14,7 +14,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['localhost',
                  '127.0.0.1',
-                 '158.160.72.40']
+                 '158.160.72.40',
+                 'foodgramson.hopto.org']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
