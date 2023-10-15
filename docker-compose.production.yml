@@ -40,3 +40,6 @@ services:
       - media:/app/media
     ports:
       - 9080:80
+    depends_on:
+      - backend
+      - frontend
