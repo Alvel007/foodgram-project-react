@@ -126,4 +126,3 @@ class RecipeViewSet(viewsets.ModelViewSet):
         response = HttpResponse('Cписок покупок:\n' + '\n'.join(shopping_list),
                                 content_type='text/plain')
         return response
-
