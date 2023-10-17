@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
   gateway:
-    container_name: nginx_gateway
+    container_name: nginx_foodgram
     image: alvel007/foodgram_gateway:latest
     env_file: .env
     volumes:
