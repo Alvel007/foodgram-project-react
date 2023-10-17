@@ -1,0 +1,47 @@
+version: '3'
+
+volumes:
+  static:
+  backend_static:
+  backend_media:
+  postgres_data:
+
+services:
+  db:
+    container_name: postgre_db_foodgram
+    image: postgres:13.10
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  frontend:
+    container_name: frontend_foodgram
+    image: alvel007/foodgram_frontend:latest
+    env_file: .env
+    command: cp -r /app/build/. /static/
+    volumes:
+      - static:/app/result_build/build
+  backend:
+    container_name: backend_foodgram
+    image: alvel007/foodgram_backend:latest
+    env_file: .env
+    volumes:
+      - backend_static:/app/static
+      - backend_media:/app/media
+    depends_on:
+      - db
+  gateway:
+    container_name: nginx_foodgram
+    image: alvel007/foodgram_gateway:latest
+    env_file: .env
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/usr/share/nginx/html/
+      - backend_static:/backend_static
+      - backend_media:/backend_media
+      - ../docs/:/usr/share/nginx/html/api/docs/
+    ports:
+      - 9080:80
+    depends_on:
+      - backend
+    restart:
+      always
