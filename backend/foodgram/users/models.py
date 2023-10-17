@@ -1,51 +1,27 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from users.validators import validate_password, validate_username
 
 
 class User(AbstractUser):
     """
-    Кастомная модель пользователя.
+    Кастомная модель пользователя на основе AbstractUser.
+
+    Поля:
+    - username (str): Имя пользователя (уникальное поле).
+    - password (str): Пароль пользователя.
+    - email (str): Email пользователя (уникальное поле).
+    - first_name (str): Имя пользователя.
+    - last_name (str): Фамилия пользователя.
     """
-    username = models.CharField(
-        verbose_name='Имя пользователя',
-        max_length=128,
-        unique=True,
-        blank=False,
-        null=False,
-        validators=[validate_username],
-    )
-    email = models.EmailField(
-        verbose_name='Электронная почта',
-        max_length=64,
-        unique=True,
-        blank=False,
-        null=False,
-    )
-    first_name = models.CharField(
-        verbose_name='Имя',
-        max_length=128,
-        blank=False,
-        null=False,
-    )
-    last_name = models.CharField(
-        verbose_name='Фамилия',
-        max_length=128,
-        blank=False,
-        null=False,
-    )
-    password = models.CharField(
-        verbose_name='Пароль',
-        max_length=64,
-        blank=False,
-        null=False,
-        validators=[validate_password],
-    )
+
+    email = models.EmailField("Почта", unique=True, max_length=254)
+    first_name = models.CharField("Имя", max_length=150)
+    last_name = models.CharField("Фамилия", max_length=150)
 
     class Meta:
-        ordering = ['id']
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        ordering = ["id"]
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
     def __str__(self):
         return self.username
@@ -53,31 +29,35 @@ class User(AbstractUser):
 
 class Subscription(models.Model):
     """
-    Информация о подписках.
+    Модель для хранения информации о подписках.
+
+    Поля:
+    - user (User): Подписчик (связь с моделью User).
+    - author (User): Автор (связь с моделью User).
     """
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='follower',
-        verbose_name='Подписчик',
+        related_name="subscribes",
+        verbose_name="Подписчик",
     )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='following',
-        verbose_name='Автор',
+        related_name="subscribers",
+        verbose_name="Автор",
     )
 
     class Meta:
-        verbose_name = 'Подписка'
-        verbose_name_plural = 'Подписки'
+        verbose_name = "Подписка"
+        verbose_name_plural = "Подписки"
+
         constraints = [
             models.UniqueConstraint(
-                fields=['author', 'user'],
-                name='unique_author_user',
+                fields=("user", "author"), name="unique_subscription"
             )
         ]
 
     def __str__(self):
-        return f'{self.user.username} подписан на автора: '
-        f'{self.author.username}'
+        return f"Подписка {self.user.username} на {self.author.username}"

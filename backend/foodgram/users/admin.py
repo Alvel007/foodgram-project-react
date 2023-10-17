@@ -1,34 +1,22 @@
 from django.contrib import admin
-from recipes.models import Ingredient, Recipe, Tag
+from django.contrib.auth.admin import UserAdmin
 
 from .models import Subscription, User
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email', 'first_name', 'last_name')
-    list_filter = ('username', 'email')
+class CustomUserAdmin(UserAdmin):
+    list_display = (
+        "pk",
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+    )
+    list_filter = ("username", "email")
 
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'author')
-    list_filter = ('user', 'author')
-
-
-@admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('author', 'name', 'text')
-    list_filter = ('author', 'name')
-
-
-@admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', 'color', 'slug')
-    list_filter = ('name',)
-
-
-@admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    list_filter = ('name',)
+    list_display = ("id", "user", "author")
+    search_fields = ("user__username", "author__username")
