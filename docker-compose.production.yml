@@ -35,11 +35,10 @@ services:
     image: alvel007/foodgram_gateway:latest
     env_file: .env
     volumes:
-      - /.nginx.conf:/etc/nginx/sites-enabled/default
-      - static:/usr/share/nginx/html/
-      - backend_static:/backend_static
-      - backend_media:/backend_media
+      - ../frontend/build:/usr/share/nginx/html/
       - ../docs/:/usr/share/nginx/html/api/docs/
+      - static:/static
+      - media:/app/media
     ports:
       - 9080:80
     depends_on:
