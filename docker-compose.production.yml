@@ -31,17 +31,18 @@ services:
     depends_on:
       - db
   gateway:
-    container_name: nginx_foodgram
+    container_name: nginx_gateway
     image: alvel007/foodgram_gateway:latest
     env_file: .env
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ../frontend/build:/usr/share/nginx/html/
+      - /.nginx.conf:/etc/nginx/sites-enabled/default
+      - static:/usr/share/nginx/html/
+      - backend_static:/backend_static
+      - backend_media:/backend_media
       - ../docs/:/usr/share/nginx/html/api/docs/
-      - static:/static
-      - media:/app/media
     ports:
       - 9080:80
     depends_on:
       - backend
-      - frontend
+    restart:
+      always
