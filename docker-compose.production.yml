@@ -12,6 +12,8 @@ services:
     env_file: .env
     volumes:
        - pg_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
   frontend:
     container_name: frontend_foodgram
     image: alvel007/foodgram_frontend:latest
