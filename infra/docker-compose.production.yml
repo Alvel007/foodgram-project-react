@@ -9,12 +9,13 @@ volumes:
 services: 
   db:
     container_name: postgre_db_prod
-    image: postgres:latest 
+    image: postgres:13.10
     env_file: ./.env 
     volumes: 
       - pg_data:/var/lib/postgresql/data 
    
-  backend: 
+  backend:
+    container_name: backend_prod
     image: alvel007/foodgram_backend:latest 
     env_file: ./.env 
     depends_on: 
@@ -23,14 +24,16 @@ services:
       - static:/static 
       - media:/app/media 
    
-  frontend: 
+  frontend:
+    container_name: frontend_prod
     image: alvel007/foodgram_frontend:latest 
     depends_on: 
       - backend 
     volumes: 
       - ../frontend/:/app/result_build/ 
  
-  nginx: 
+  nginx:
+    container_name: nginx_prod
     image: nginx:latest 
     env_file: ./.env 
     depends_on: 
