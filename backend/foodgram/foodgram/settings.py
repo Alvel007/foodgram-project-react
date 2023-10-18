@@ -63,10 +63,10 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'foodgram',
+        'NAME': 'postgre_db_prod',
         'USER': 'foodgram',
         'PASSWORD': 'foodgram',
-        'HOST': 'postgre_db_prod',
+        'HOST': '127.0.0.1',
         'PORT': 5432,
     }
 }
