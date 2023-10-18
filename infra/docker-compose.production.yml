@@ -7,7 +7,8 @@ volumes:
  
  
 services: 
-  db: 
+  db:
+    container_name: postgre_db_prod
     image: postgres:latest 
     env_file: ./.env 
     volumes: 
