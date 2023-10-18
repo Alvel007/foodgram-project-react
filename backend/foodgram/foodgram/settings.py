@@ -66,7 +66,7 @@ DATABASES = {
         'NAME': 'postgre_db_prod',
         'USER': 'foodgram',
         'PASSWORD': 'foodgram',
-        'HOST': '127.0.0.1',
+        'HOST': 'postgre_db_prod',
         'PORT': 5432,
     }
 }
