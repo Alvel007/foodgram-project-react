@@ -21,6 +21,8 @@ services:
     volumes:
       - static:/static
       - media:/app/media
+    ports:
+      - "8000:80"
   
   frontend:
     image: alvel007/foodgram_frontend:latest
