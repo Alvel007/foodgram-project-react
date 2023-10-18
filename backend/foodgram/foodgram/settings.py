@@ -12,7 +12,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['158.160.72.40', 'foodgarams.hopto.org', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['158.160.72.40', 'fooodgrams.ddns.net', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,7 +59,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
-
 
 DATABASES = {
     'default': {
