@@ -16,9 +16,6 @@ ALLOWED_HOSTS = [' 158.160.72.40', 'foodgarams.hopto.org', 'localhost', '127.0.0
 
 
 INSTALLED_APPS = [
-    'users',
-    'api',
-    'recipes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,6 +26,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'djoser',
+    'users',
+    'api',
+    'recipes',
 ]
 
 MIDDLEWARE = [

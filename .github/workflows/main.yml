@@ -81,8 +81,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Executing remote ssh commands to deploy
-        uses: appleboy/ssh-action@master
+      - name: Checkout repo
+        uses: actions/checkout@v3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
