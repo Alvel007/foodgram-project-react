@@ -96,7 +96,7 @@ jobs:
         username: ${{ secrets.USER }}
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        source: "nginx/nginx.conf"
+        source: "infra/nginx.conf"
         target: "foodgram/infra/"
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
@@ -107,8 +107,8 @@ jobs:
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd foodgram/infra
-          mv nginx/nginx.conf ./nginx.conf
-          rm -R nginx
+          mv infra/nginx.conf ./nginx.conf
+          rm -R infra
           sudo docker compose -f docker-compose.production.yml pull
           sudo docker compose -f docker-compose.production.yml down
           sudo docker compose -f docker-compose.production.yml up -d
