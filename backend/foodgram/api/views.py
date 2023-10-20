@@ -144,7 +144,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         self.creating_pdf(ingredients, pdf_file)
         response = HttpResponse(buffer.getvalue(), content_type=CONTENT_TYPE)
         response['Content-Disposition'] = (
-        f'attachment; filename={NAME_SHOPPING_CART_PDF}'
+            f'attachment; filename={NAME_SHOPPING_CART_PDF}'
         )
         return response
 
