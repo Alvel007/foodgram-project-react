@@ -12,8 +12,6 @@ SECRET_KEY = os.getenv('SECRET_KEY', default=get_random_secret_key())
 
 DEBUG = os.getenv('DEBUG', default=False)
 
-CSRF_TRUSTED_ORIGINS = ['http://*localhost', 'http://158.160.72.40']
-
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
                  os.getenv('HOST_IP'),
