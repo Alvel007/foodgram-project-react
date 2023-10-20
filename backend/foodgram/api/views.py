@@ -9,6 +9,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from io import BytesIO
 
 from foodgram.settings import NAME_SHOPPING_CART_PDF
 from recipes.models import (Cart, Favorite, Ingredient, IngredientRecipe,
@@ -138,12 +139,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ).order_by(
             'ingredient__name'
         ).annotate(ingredient_total=Sum('amount'))
-
-        response = HttpResponse(content_type=CONTENT_TYPE)
-        response['Content-Disposition'] = (
-            f'attachment; filename={NAME_SHOPPING_CART_PDF}')
-        pdf_file = canvas.Canvas(response)
+        buffer = BytesIO()
+        pdf_file = canvas.Canvas(buffer)
         self.creating_pdf(ingredients, pdf_file)
+        response = HttpResponse(buffer.getvalue(), content_type=CONTENT_TYPE)
+        response['Content-Disposition'] = f'attachment; filename={NAME_SHOPPING_CART_PDF}'
         return response
 
 

@@ -5,7 +5,6 @@ from users.views import CustomUserViewSet
 
 app_name = 'api'
 router = DefaultRouter()
-# router.register(r'api/users/subscriptions', FollowViewSet, basename='follow')
 router.register('users', CustomUserViewSet, basename='follow')
 
 urlpatterns = [
