@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'SECRET_KEY')
 
 DEBUG = False
 
-CSRF_TRUSTED_ORIGINS = ['http://*localhost', 'http://51.250.106.189']
+CSRF_TRUSTED_ORIGINS = ['http://*localhost', 'http://158.160.72.40']
 
 ALLOWED_HOSTS = ['158.160.72.40', 'localhost', '127.0.0.1', 'fooodgrams.duckdns.org']
 
@@ -91,7 +91,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -101,11 +101,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-STATIC_URL = 'static/'
+STATIC_URL = '/backend_static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/backend_media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
