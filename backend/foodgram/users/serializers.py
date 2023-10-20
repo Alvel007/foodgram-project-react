@@ -1,9 +1,8 @@
 from rest_framework import serializers
-from rest_framework.serializers import ModelSerializer
 from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 from rest_framework.serializers import (CharField, EmailField, ModelSerializer)
 
-from djoser.serializers import UserCreateSerializer, UserSerializer
+from djoser.serializers import UserCreateSerializer
 
 from recipes.models import Recipe
 from users.models import Follow, User
