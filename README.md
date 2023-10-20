@@ -8,10 +8,10 @@
 
 ## Установка
 
-1. Клонируйте репозиторий на свой компьютер:
+1. Клонируйте репозиторий на свой компьютер.
 
     ```bash
-    git clone https://github.com/devlili/foodgram-project-react.git
+    git clone git@github.com:<ВАШ_USERNAME_GITHUB>/foodgram-project-react.git
     ```
     ```bash
     cd foodgram-project-react
