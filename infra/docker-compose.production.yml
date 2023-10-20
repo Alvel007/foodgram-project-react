@@ -10,9 +10,15 @@ services:
   db:
     container_name: postgre_db_prod
     image: postgres:latest 
-    env_file: ./.env 
+    environment:
+      POSTGRES_USER: foodgram_user
+      POSTGRES_PASSWORD: foodgram_password
+      POSTGRES_DB: foodgram
+
     volumes: 
       - pg_data:/var/lib/postgresql/data 
+    ports:
+      - "5432:5432"
    
   backend: 
     image: alvel007/foodgram_backend:latest 
