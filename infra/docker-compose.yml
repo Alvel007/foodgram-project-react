@@ -1,13 +1,15 @@
 version: '3.3'
 
 volumes:
-  pg_data:
   static:
-  media:
+  backend_static:
+  backend_media:
+  pg_data:
 
 
 services:
   db:
+    container_name: postgre_db_prod
     image: postgres:latest
     env_file: ./.env
     volumes:
@@ -18,10 +20,9 @@ services:
     env_file: ./.env
     depends_on:
       - db
-    volumes:
-      - ../backend:/app
-      - static:/static
-      - media:/app/media
+    volumes: 
+      - backend_static:/app/static
+      - backend_media:/app/media
   
   frontend:
     build:
@@ -29,8 +30,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - backend
-    volumes:
-      - ../frontend/:/app/result_build/
+    volumes: 
+      - static:/app/result_build/build 
 
   nginx:
     image: nginx:latest
