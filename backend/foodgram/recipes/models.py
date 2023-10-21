@@ -1,12 +1,19 @@
-from colorfield.fields import ColorField
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.forms import Select
 
 from foodgram.settings import MIN_COOKING_TIME, MIN_INGREDIENT_AMOUNT
+from foodgram.settings import COLOR_TAGS
 from users.models import User
 
 
-class Ingredient(models.Model):
+class BaseModel(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ('-id',)
+
+
+class Ingredient(BaseModel):
     name = models.CharField(
         max_length=256,
         verbose_name='Название ингредиента',
@@ -19,7 +26,6 @@ class Ingredient(models.Model):
     )
 
     class Meta:
-        ordering = ('name',)
         verbose_name = 'Ингредиент'
         verbose_name_plural = 'Ингредиенты'
 
@@ -27,18 +33,23 @@ class Ingredient(models.Model):
         return self.name
 
 
-class Tag(models.Model):
+class Tag(BaseModel):
     name = models.CharField(
         max_length=100,
         unique=True,
         verbose_name='Название тега',
         help_text='Укажите название тега',
     )
-    color = ColorField(
+    color = models.CharField(
+        max_length=7,
+        choices=COLOR_TAGS,
         unique=True,
-        verbose_name='Цвет в HEX',
-        help_text='Укажите цвет в HEX',
+        verbose_name='Цвет',
+        help_text='Выберите цвет',
     )
+# Не очень понял чем не понравился модуль colorfield
+# он условно валидирует значение цвета,
+# применяя последний верный,указанный в поле color.
     slug = models.SlugField(
         max_length=50,
         unique=True,
@@ -47,7 +58,6 @@ class Tag(models.Model):
     )
 
     class Meta:
-        ordering = ['-id']
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
@@ -55,7 +65,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Recipe(models.Model):
+class Recipe(BaseModel):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -73,8 +83,7 @@ class Recipe(models.Model):
         verbose_name='Изображение',
         help_text='Добавьте изображение'
     )
-    text = models.CharField(
-        max_length=6144,
+    text = models.TextField(
         verbose_name='Текст',
         help_text='Введите текст',
     )
@@ -106,7 +115,6 @@ class Recipe(models.Model):
     )
 
     class Meta:
-        ordering = ('-id',)
         verbose_name = 'Рецепт'
         verbose_name_plural = 'Рецепты'
 
@@ -114,7 +122,7 @@ class Recipe(models.Model):
         return self.name
 
 
-class IngredientRecipe(models.Model):
+class IngredientRecipe(BaseModel):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
@@ -142,7 +150,6 @@ class IngredientRecipe(models.Model):
     )
 
     class Meta:
-        ordering = ('-id',)
         verbose_name = 'Количество ингредиента'
         verbose_name_plural = 'Количества ингредиента'
         constraints = (
@@ -156,7 +163,7 @@ class IngredientRecipe(models.Model):
         return f'{self.ingredient} для {self.recipe}'
 
 
-class TagRecipe(models.Model):
+class TagRecipe(BaseModel):
     tag = models.ForeignKey(
         Tag,
         on_delete=models.CASCADE,
@@ -173,7 +180,6 @@ class TagRecipe(models.Model):
     )
 
     class Meta:
-        ordering = ('-id',)
         verbose_name = 'Рецепты с тегами'
         verbose_name_plural = 'Рецепты с тегами'
 
@@ -181,7 +187,7 @@ class TagRecipe(models.Model):
         return f'{self.tag} для {self.recipe}'
 
 
-class Favorite(models.Model):
+class Favorite(BaseModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -198,7 +204,6 @@ class Favorite(models.Model):
     )
 
     class Meta:
-        ordering = ('-id',)
         constraints = (
             models.UniqueConstraint(
                 fields=('user', 'recipe'), name='favorite_unique'),
@@ -210,7 +215,7 @@ class Favorite(models.Model):
         return f'У {self.user.username} избран {self.recipe}'
 
 
-class Cart(models.Model):
+class Cart(BaseModel):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -227,7 +232,6 @@ class Cart(models.Model):
     )
 
     class Meta:
-        ordering = ('-id',)
         constraints = (
             models.UniqueConstraint(
                 fields=('user', 'recipe'), name='cart_unique'),

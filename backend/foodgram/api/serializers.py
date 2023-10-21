@@ -125,6 +125,8 @@ class WriteRecipeSerializer(ModelSerializer):
         ingredients = validated_data.pop('ingredientrecipes')
         recipe = Recipe.objects.create(author=request.user, **validated_data)
         recipe.tags.set(tags)
+
+        ingredient_recipe_instances = []
         for ingredient in ingredients:
             amount = ingredient.get('amount')
             base_ingredient = ingredient.get('id')
@@ -133,8 +135,11 @@ class WriteRecipeSerializer(ModelSerializer):
                 raise serializers.ValidationError(
                     {'errors': 'нельзя добавить два одинаковых ингредиента'}
                 )
-            IngredientRecipe.objects.create(
-                recipe=recipe, ingredient=base_ingredient, amount=amount)
+            ingredient_recipe_instances.append(
+                IngredientRecipe(recipe=recipe, ingredient=base_ingredient, amount=amount)
+            )
+
+        IngredientRecipe.objects.bulk_create(ingredient_recipe_instances)
         return recipe
 
     @transaction.atomic
@@ -149,6 +154,8 @@ class WriteRecipeSerializer(ModelSerializer):
         instance.text = validated_data.get('text', instance.text)
         instance.cooking_time = validated_data.get(
             'cooking_time', instance.cooking_time)
+
+        ingredient_recipe_instances = []
         for ingredient in ingredients:
             amount = ingredient.get('amount')
             base_ingredient = ingredient.get('id')
@@ -157,9 +164,11 @@ class WriteRecipeSerializer(ModelSerializer):
                 raise serializers.ValidationError(
                     {'errors': 'нельзя добавить два одинаковых ингредиента'}
                 )
-            IngredientRecipe.objects.create(
-                recipe=instance, ingredient=base_ingredient, amount=amount
+            ingredient_recipe_instances.append(
+                IngredientRecipe(recipe=instance, ingredient=base_ingredient, amount=amount)
             )
+
+        IngredientRecipe.objects.bulk_create(ingredient_recipe_instances)
         instance.save()
         return instance
 

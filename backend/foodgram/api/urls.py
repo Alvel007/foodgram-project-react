@@ -18,7 +18,5 @@ router.register(
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('recipes/download_shopping_cart/',
-         RecipeViewSet.as_view({'get': 'download_shopping_cart'})),
     path('auth/', include('djoser.urls.authtoken')),
 ]

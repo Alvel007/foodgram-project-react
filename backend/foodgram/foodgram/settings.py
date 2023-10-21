@@ -24,7 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'colorfield',
+    'csvimport.app.CSVImportConf',
     'rest_framework',
     'rest_framework.authtoken',
     'users.apps.UsersConfig',
@@ -63,7 +63,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -129,6 +128,10 @@ MIN_INGREDIENT_AMOUNT = 1
 
 NAME_SHOPPING_CART_PDF = 'shopping_cart.pdf'
 
+EMPTY_VALUE_DISPLAY = '-empty-'
+
+PAGINATION_SIZE = 6
+
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'HIDE_USERS': False,
@@ -140,3 +143,26 @@ DJOSER = {
                     'user_delete': ['rest_framework.permissions.IsAdminUser'],
                     },
 }
+
+COLOR_TAGS = [
+    ('#800000', 'Тёмно-бордовый'),
+    ('#FF0000', 'Красный'),
+    ('#FF6347', 'Томатный'),
+    ('#FF4500', 'Оранжево-красный'),
+    ('#FFA500', 'Оранжевый'),
+    ('#FFD700', 'Золотой'),
+    ('#FFFF00', 'Жёлтый'),
+    ('#ADFF2F', 'Зелёно-жёлтый'),
+    ('#008000', 'Зелёный'),
+    ('#00FF00', 'Лаймовый'),
+    ('#40E0D0', 'Бирюзовый'),
+    ('#00FFFF', 'Морская волна'),
+    ('#00008B', 'Тёмно-синий'),
+    ('#0000FF', 'Синий'),
+    ('#800080', 'Фиолетовый'),
+    ('#FF00FF', 'Маджента'),
+    ('#DC143C', 'Малиновый'),
+    ('#A52A2A', 'Коричневый'),
+    ('#808080', 'Серый'),
+    ('#000000', 'Чёрный'),
+]
