@@ -136,7 +136,9 @@ class WriteRecipeSerializer(ModelSerializer):
                     {'errors': 'нельзя добавить два одинаковых ингредиента'}
                 )
             ingredient_recipe_instances.append(
-                IngredientRecipe(recipe=recipe, ingredient=base_ingredient, amount=amount)
+                IngredientRecipe(recipe=recipe,
+                                 ingredient=base_ingredient,
+                                 amount=amount)
             )
 
         IngredientRecipe.objects.bulk_create(ingredient_recipe_instances)
@@ -165,7 +167,9 @@ class WriteRecipeSerializer(ModelSerializer):
                     {'errors': 'нельзя добавить два одинаковых ингредиента'}
                 )
             ingredient_recipe_instances.append(
-                IngredientRecipe(recipe=instance, ingredient=base_ingredient, amount=amount)
+                IngredientRecipe(recipe=instance,
+                                 ingredient=base_ingredient,
+                                 amount=amount)
             )
 
         IngredientRecipe.objects.bulk_create(ingredient_recipe_instances)

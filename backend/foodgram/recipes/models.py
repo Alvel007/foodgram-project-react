@@ -1,6 +1,5 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.forms import Select
 
 from foodgram.settings import MIN_COOKING_TIME, MIN_INGREDIENT_AMOUNT
 from foodgram.settings import COLOR_TAGS
