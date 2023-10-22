@@ -7,13 +7,13 @@
 Проект доступен по [адресу](http://fooodgrams.duckdns.org/)
 
 Данные для входа администратора:   
-    ```bash
-    ad@min.ru
-    admin
     ```
+    ad@min.ru   
+    admin
+    ```   
 Данные для входа тестового пользователя:   
-    ```bash
-    alex@alex.ru
+    ```
+    alex@alex.ru   
     147qw741
     ```
 
