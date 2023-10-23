@@ -26,9 +26,13 @@ class UserSerializer(ModelSerializer):
 
 class CreateUserSerializer(UserCreateSerializer):
     username = CharField(validators=[UniqueValidator(
-        queryset=User.objects.all())])
+        queryset=User.objects.all(),
+        message='Пользователь с таким именем уже существует'
+    )])
     email = EmailField(validators=[UniqueValidator(
-        queryset=User.objects.all())])
+        queryset=User.objects.all(),
+        message='Пользователь с таким email уже существует'
+    )])
 
     class Meta:
         model = User

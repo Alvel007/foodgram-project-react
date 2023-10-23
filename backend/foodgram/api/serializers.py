@@ -11,10 +11,15 @@ from recipes.models import (Cart, Favorite, Ingredient, IngredientRecipe,
 from users.serializers import UserSerializer
 
 
-class IngredientSerializer(ModelSerializer):
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ('id', 'name', 'measurement_unit',)
+        error_messages = {
+            'name': {
+                'unique': 'Ингредиент с таким названием уже существует',
+            },
+        }
 
 
 class IngredientRecipeSerializer(ModelSerializer):
@@ -28,7 +33,7 @@ class IngredientRecipeSerializer(ModelSerializer):
         fields = ('id', 'name', 'measurement_unit', 'amount',)
 
 
-class WriteIngredientRecipeSerializer(ModelSerializer):
+class WriteIngredientRecipeSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         queryset=Ingredient.objects.all()
     )
@@ -39,7 +44,10 @@ class WriteIngredientRecipeSerializer(ModelSerializer):
                 message=(f'Количество ингредиента не может быть '
                          f'меньше {MIN_INGREDIENT_AMOUNT}')
             ),
-        )
+        ),
+        error_messages={
+            'min_value': f'Количество ингредиента не может быть меньше {MIN_INGREDIENT_AMOUNT}',
+        }
     )
 
     class Meta:
@@ -50,11 +58,17 @@ class WriteIngredientRecipeSerializer(ModelSerializer):
 class TagSerializer(ModelSerializer):
     name = serializers.CharField(
         max_length=100,
-        validators=(UniqueValidator(Tag.objects.all()),)
+        validators=(UniqueValidator(Tag.objects.all()),),
+        error_messages={
+            'unique': 'Тег с таким названием уже существует',
+        }
     )
     slug = serializers.SlugField(
         max_length=50,
-        validators=(UniqueValidator(Tag.objects.all()),)
+        validators=(UniqueValidator(Tag.objects.all()),),
+        error_messages={
+            'unique': 'Тег с таким слагом уже существует',
+        }
     )
 
     class Meta:
@@ -101,8 +115,17 @@ class WriteRecipeSerializer(ModelSerializer):
         source='ingredientrecipes',
     )
     tags = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=Tag.objects.all())
-    image = Base64ImageField()
+        many=True, queryset=Tag.objects.all(),
+        error_messages={
+            'does_not_exist': 'Тег с таким идентификатором не существует',
+            'incorrect_type': 'Значение должно быть списком идентификаторов тегов'
+        }
+    )
+    image = Base64ImageField(
+        error_messages={
+            'invalid_image': 'Неверный формат изображения'
+        }
+    )
     cooking_time = serializers.IntegerField(
         validators=(
             MinValueValidator(
@@ -110,7 +133,10 @@ class WriteRecipeSerializer(ModelSerializer):
                 message=(f'Время приготовления не может быть '
                          f'меньше {MIN_COOKING_TIME} минуты')
             ),
-        )
+        ),
+        error_messages={
+            'invalid': 'Неверное значение времени приготовления'
+        }
     )
 
     class Meta:
@@ -164,7 +190,7 @@ class WriteRecipeSerializer(ModelSerializer):
             if (IngredientRecipe.objects.filter(
                     recipe=instance, ingredient=base_ingredient).exists()):
                 raise serializers.ValidationError(
-                    {'errors': 'нельзя добавить два одинаковых ингредиента'}
+                    {'errors': 'Нельзя добавить два одинаковых ингредиента'}
                 )
             ingredient_recipe_instances.append(
                 IngredientRecipe(recipe=instance,
