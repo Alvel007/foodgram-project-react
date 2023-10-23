@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'spectrum',
     'csvimport.app.CSVImportConf',
     'rest_framework',
     'rest_framework.authtoken',
@@ -66,6 +67,13 @@ WSGI_APPLICATION = 'foodgram.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+"""DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('POSTGRES_DB', 'foodgram'),
         'USER': os.getenv('POSTGRES_USER', 'foodgram_user'),
@@ -73,7 +81,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'postgre_db_prod'),
         'PORT': os.getenv('DB_PORT', 5432),
     }
-}
+}"""
 
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -46,9 +46,6 @@ class Tag(BaseModel):
         verbose_name='Цвет',
         help_text='Выберите цвет',
     )
-# Не очень понял чем не понравился модуль colorfield
-# он условно валидирует значение цвета,
-# применяя последний верный,указанный в поле color.
     slug = models.SlugField(
         max_length=50,
         unique=True,
