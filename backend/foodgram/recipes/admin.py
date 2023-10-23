@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from recipes.forms import TagForm
 from foodgram.settings import EMPTY_VALUE_DISPLAY
 from recipes.models import (Cart, Favorite, Ingredient,
                             IngredientRecipe, Recipe, Tag,
@@ -27,6 +28,7 @@ class IngredientAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    form = TagForm
     list_display = ('name', 'color', 'slug',)
     search_fields = ('name',)
     empty_value_display = EMPTY_VALUE_DISPLAY
