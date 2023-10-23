@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from .forms import TagForm
 from foodgram.settings import EMPTY_VALUE_DISPLAY
 from recipes.models import (Cart, Favorite, Ingredient,
                             IngredientRecipe, Recipe, Tag,
