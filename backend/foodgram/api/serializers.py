@@ -41,12 +41,13 @@ class WriteIngredientRecipeSerializer(serializers.ModelSerializer):
         validators=(
             MinValueValidator(
                 limit_value=MIN_INGREDIENT_AMOUNT,
-                message=(f'Количество ингредиента не может быть '
+                message=('Количество ингредиента не может быть '
                          f'меньше {MIN_INGREDIENT_AMOUNT}')
             ),
         ),
         error_messages={
-            'min_value': f'Количество ингредиента не может быть меньше {MIN_INGREDIENT_AMOUNT}',
+            'min_value': 'Количество ингредиента не может быть меньше '
+                         f'{MIN_INGREDIENT_AMOUNT}',
         }
     )
 
@@ -118,7 +119,8 @@ class WriteRecipeSerializer(ModelSerializer):
         many=True, queryset=Tag.objects.all(),
         error_messages={
             'does_not_exist': 'Тег с таким идентификатором не существует',
-            'incorrect_type': 'Значение должно быть списком идентификаторов тегов'
+            'incorrect_type': 'Значение должно быть списком '
+            'идентификаторов тегов'
         }
     )
     image = Base64ImageField(
