@@ -31,7 +31,6 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     empty_value_display = EMPTY_VALUE_DISPLAY
     inlines = (TagRecipeInline,)
-    form = TagForm
 
 
 @admin.register(Recipe)
