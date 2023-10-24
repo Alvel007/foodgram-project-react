@@ -2,7 +2,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 
 from foodgram.settings import MIN_COOKING_TIME, MIN_INGREDIENT_AMOUNT
-from foodgram.settings import COLOR_TAGS
+from colorful.fields import ColorField
 from users.models import User
 
 
@@ -32,20 +32,14 @@ class Ingredient(BaseModel):
         return self.name
 
 
-class Tag(BaseModel):
+class Tag(models.Model):
     name = models.CharField(
         max_length=100,
         unique=True,
         verbose_name='Название тега',
         help_text='Укажите название тега',
     )
-    color = models.CharField(
-        max_length=7,
-        choices=COLOR_TAGS,
-        unique=True,
-        verbose_name='Цвет',
-        help_text='Выберите цвет',
-    )
+    color = ColorField(default='#FFFFFF')
     slug = models.SlugField(
         max_length=50,
         unique=True,
