@@ -40,8 +40,8 @@ class Tag(models.Model):
         help_text='Укажите название тега',
     )
     color = RGBColorField(default='#FFFFFF',
-                          verbose_name='Цвет',
-                          help_text='Выберите цвет')
+                          verbose_name='Цвет тэга',
+                          help_text='Выберите подходящий цвет тэга')
     slug = models.SlugField(
         max_length=50,
         unique=True,
