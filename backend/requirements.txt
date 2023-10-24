@@ -12,3 +12,4 @@ drf-extra-fields==3.7.0
 django-filter==23.2
 reportlab==3.6.9
 django-csvimport
+django-spectrum
