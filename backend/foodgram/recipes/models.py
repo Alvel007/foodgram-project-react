@@ -39,7 +39,9 @@ class Tag(models.Model):
         verbose_name='Название тега',
         help_text='Укажите название тега',
     )
-    color = RGBColorField(default='#FFFFFF')
+    color = RGBColorField(default='#FFFFFF',
+                          verbose_name='Цвет',
+                          help_text='Выберите цвет')
     slug = models.SlugField(
         max_length=50,
         unique=True,
